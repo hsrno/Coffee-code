@@ -1,0 +1,252 @@
+// =================================================================
+// 1. ELEMEN DOM (Document Object Model) - PENGAMBILAN VARIABEL
+// =================================================================
+
+// --- A. Elemen Navigasi & Toggle ---
+const navbarNav = document.querySelector(".navbar-nav");
+const coffeeMenu = document.querySelector("#coffee-menu"); 
+
+// --- B. Elemen Keranjang Belanja & Tombol Add to Cart ---
+const ShopCart = document.querySelector(".shopping-cart");
+const shoppingCartButton = document.querySelector("#shopping-cart-button");
+// Tombol 'Add to Cart' di Product Card
+const productAddToCartButtons = document.querySelectorAll(".product-card .product-icons a:first-child");
+// Tombol 'Add to Cart' di Modal
+const modalAddToCartButton = document.querySelector(".modal .cart-button"); 
+// Tempat item keranjang ditampilkan
+const cartItemsContainer = document.querySelector(".shopping-cart"); 
+const cartItems = {}; // Objek untuk menyimpan item di keranjang {nama_produk: {harga, kuantitas}}
+
+// --- C. Elemen Pencarian ---
+const searchForm = document.querySelector(".search-form");
+const searchBox = document.querySelector("#search-box");
+const searchButton = document.querySelector("#search-button");
+
+// --- D. Elemen Modal Detail Produk (Dinamic) ---
+const itemDetailModal = document.querySelector("#item-detail-modal");
+const itemDetailButtons = document.querySelectorAll(".item-detail-button"); // Tombol 'Mata'
+const modalName = document.querySelector("#modal-name");
+const modalDesc = document.querySelector("#modal-desc");
+const modalPrice = document.querySelector("#modal-price");
+const modalImg = document.querySelector("#modal-img");
+
+
+// =================================================================
+// 2. EVENT HANDLER TOGGLE (Membuka/Menutup)
+// =================================================================
+
+// Toggle Navbar Menu (Hamburger)
+coffeeMenu.onclick = (e) => {
+  navbarNav.classList.toggle("active");
+  e.preventDefault();
+};
+
+// Toggle Shopping Cart
+shoppingCartButton.onclick = (e) => {
+  ShopCart.classList.toggle("active");
+  e.preventDefault();
+};
+
+// Toggle Search Form
+searchButton.onclick = (e) => {
+  searchForm.classList.toggle("active");
+  searchBox.focus();
+  e.preventDefault();
+};
+
+
+// =================================================================
+// 3. LOGIKA MODAL DETAIL PRODUK (DINAMIS)
+// =================================================================
+
+// Logika Membuka Modal dan Mengisi Data Spesifik
+itemDetailButtons.forEach((btn) => {
+  btn.onclick = (e) => {
+    e.preventDefault();
+
+    // 1. Ambil data dari atribut data-* tombol yang diklik
+    const name = btn.getAttribute('data-name');
+    const priceString = btn.getAttribute('data-price');
+    const desc = btn.getAttribute('data-desc');
+    const imgSrc = btn.getAttribute('data-img');
+
+    // Membersihkan price agar menjadi angka (misalnya '45K' menjadi 45000)
+    const price = parseInt(priceString.replace('K', '000'));
+
+
+    // 2. Masukkan data ke dalam elemen modal
+    modalName.innerText = name;
+    modalPrice.innerText = 'IDR ' + priceString + ' (Diskon)';
+    modalDesc.innerText = desc;
+    modalImg.src = imgSrc;
+    modalImg.alt = name;
+    
+    // Simpan data produk di tombol modal untuk fungsi Add to Cart
+    modalAddToCartButton.setAttribute('data-name', name);
+    modalAddToCartButton.setAttribute('data-price', price);
+    modalAddToCartButton.setAttribute('data-img', imgSrc);
+
+
+    // 3. Tampilkan modal
+    itemDetailModal.style.display = "flex";
+  };
+});
+
+// Logika Menutup Modal saat mengklik ikon 'x'
+document.querySelector(".modal .close-icon").onclick = (e) => {
+  itemDetailModal.style.display = "none";
+  e.preventDefault();
+};
+
+
+// =================================================================
+// 4. LOGIKA SHOPPING CART (DINAMIS)
+// =================================================================
+
+// --- A. Fungsi Utama Menambah Item ---
+function addToCart(name, price, imgSrc) {
+    // Harga diubah ke integer
+    price = parseInt(price);
+    
+    if (cartItems[name]) {
+        // Jika item sudah ada, kuantitas ditambah
+        cartItems[name].quantity += 1;
+    } else {
+        // Jika item belum ada, buat item baru
+        cartItems[name] = {
+            price: price,
+            quantity: 1,
+            imgSrc: imgSrc
+        };
+    }
+    updateCartDisplay();
+    // Tampilkan keranjang setelah menambahkan
+    ShopCart.classList.add("active");
+}
+
+// --- B. Fungsi Mengupdate Tampilan Keranjang ---
+function updateCartDisplay() {
+    // Kosongkan container keranjang kecuali subtotal (jika ada)
+    cartItemsContainer.innerHTML = '';
+    
+    let subtotal = 0;
+    let itemCount = 0;
+    
+    // Loop melalui semua item di cartItems
+    for (const name in cartItems) {
+        const item = cartItems[name];
+        if (item.quantity > 0) { // Pastikan item ada
+            subtotal += item.price * item.quantity;
+            itemCount += item.quantity;
+
+            // Membuat elemen HTML untuk item baru
+            const cartItemHTML = `
+                <div class="cart-item" data-name="${name}">
+                    <img src="${item.imgSrc}" alt="${name}">
+                    <div class="detail-item">
+                        <h3>${name} (${item.quantity}x)</h3>
+                        <div class="item-price">IDR ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                    </div>
+                    <i data-feather="trash-2" class="remove-item"></i>
+                </div>
+            `;
+            cartItemsContainer.innerHTML += cartItemHTML;
+        }
+    }
+    
+    // Tambahkan Subtotal dan Total Item di bagian bawah
+    const subtotalHTML = `
+        <h4 class="subtotal-display">Subtotal (${itemCount} item): IDR ${subtotal.toLocaleString('id-ID')}</h4>
+    `;
+    cartItemsContainer.innerHTML += subtotalHTML;
+    
+    // Re-initialize Feather Icons
+    feather.replace();
+    
+    // Re-attach listener untuk tombol hapus (karena elemen baru dibuat)
+    document.querySelectorAll(".remove-item").forEach(trashBtn => {
+        trashBtn.onclick = (e) => {
+            const itemName = e.target.closest('.cart-item').getAttribute('data-name');
+            removeItemFromCart(itemName);
+        };
+    });
+}
+
+// --- C. Fungsi Menghapus Item ---
+function removeItemFromCart(name) {
+    if (cartItems[name]) {
+        if (cartItems[name].quantity > 1) {
+            cartItems[name].quantity -= 1; // Kurangi kuantitas
+        } else {
+            delete cartItems[name]; // Hapus item jika kuantitas 1
+        }
+    }
+    updateCartDisplay();
+}
+
+// --- D. Event Listener untuk Tombol Add to Cart di Product Card ---
+productAddToCartButtons.forEach(btn => {
+    btn.onclick = (e) => {
+        e.preventDefault();
+        
+        // Asumsi data produk ada di product-card (induk)
+        const productCard = btn.closest('.product-card');
+        const name = productCard.querySelector('.product-content h3').innerText;
+        // Ambil harga dari text. Harusnya menggunakan data-price di tombol mata atau data-attribute
+        const priceString = productCard.querySelector('.product-price').innerText.split('|')[0].replace('IDR ', '').replace('K', '000').trim(); 
+        const price = parseInt(priceString); 
+        
+        // Asumsi path gambar diambil dari img element
+        const imgSrc = productCard.querySelector('.product-image img').getAttribute('src');
+
+        addToCart(name, price, imgSrc);
+    };
+});
+
+// --- E. Event Listener untuk Tombol Add to Cart di Modal ---
+modalAddToCartButton.onclick = (e) => {
+    e.preventDefault();
+    const name = e.target.getAttribute('data-name') || e.target.closest('.cart-button').getAttribute('data-name');
+    const price = e.target.getAttribute('data-price') || e.target.closest('.cart-button').getAttribute('data-price');
+    const imgSrc = e.target.getAttribute('data-img') || e.target.closest('.cart-button').getAttribute('data-img');
+    
+    // Pastikan data ada sebelum menambahkan
+    if (name && price && imgSrc) {
+        addToCart(name, price, imgSrc);
+        itemDetailModal.style.display = "none"; // Tutup modal setelah menambah
+    } else {
+         console.error("Data produk tidak lengkap pada tombol modal.");
+    }
+};
+
+
+// =================================================================
+// 5. CLOSING GLOBAL (Menutup Elemen saat Klik di Luar)
+// =================================================================
+
+document.addEventListener("click", function (e) {
+  // 1. Menutup Navbar Menu
+  if (!coffeeMenu.contains(e.target) && !navbarNav.contains(e.target)) {
+    navbarNav.classList.remove("active");
+  }
+
+  // 2. Menutup Search Form
+  if (!searchButton.contains(e.target) && !searchForm.contains(e.target)) {
+    searchForm.classList.remove("active");
+  }
+
+  // 3. Menutup Shopping Cart
+  // Mengecualikan jika yang diklik adalah tombol yang baru dibuat (trash icon)
+  const isTrashIcon = e.target.classList.contains('remove-item');
+  if (!shoppingCartButton.contains(e.target) && !ShopCart.contains(e.target) && !isTrashIcon) {
+    ShopCart.classList.remove("active");
+  }
+
+  // 4. Menutup Modal (saat mengklik background gelap di luar modal-container)
+  if (e.target === itemDetailModal) {
+    itemDetailModal.style.display = "none";
+  }
+});
+
+// Panggil sekali saat dimuat untuk menampilkan cart awal (saat ini kosong)
+updateCartDisplay();

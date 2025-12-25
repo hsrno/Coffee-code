@@ -1,0 +1,64 @@
+<div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/product/Arabica.png" alt="Product 1">
+          <div class="product-content">
+            <h3>Arabica</h3>
+          <p>Arabica coffee brings you a gentle balance of fragrance and flavor. Cultivated in lush highlands, it offers a comforting, elegant experience in every cup, delivering timeless quality and refined indulgence</p>
+          <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">IDR 45K <span>IDR 58K</span></div>
+            <a href="#" class="cart-button"><i data-feather="shopping-cart"></i> <span>Add to cart</span></a>
+          </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/product/Robusta.png" alt="Product 2">
+          <div class="product-content">
+            <h3>Robusta</h3>
+          <p>Robusta coffee delivers bold strength and deep character. With higher caffeine and earthy notes, it offers a powerful, invigorating taste that energizes every moment, perfect for those who crave intensity.</p>
+          <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">IDR 45K <span>IDR 58K</span></div>
+            <a href="#" class="cart-button"><i data-feather="shopping-cart"></i> <span>Add to cart</span></a>
+          </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/product/Liberica.png" alt="Product 3">
+          <div class="product-content">
+            <h3>Liberica</h3>
+          <p>Liberica coffee is rare and distinctive, with smoky, floral, and woody undertones. Grown in select tropical regions, it provides a unique, adventurous flavor journey that captivates true coffee explorers.</p>
+          <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">IDR 45K <span>IDR 58K</span></div>
+            <a href="#" class="cart-button"><i data-feather="shopping-cart"></i> <span>Add to cart</span></a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>

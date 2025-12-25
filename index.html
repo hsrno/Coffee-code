@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CoffeeBreak</title>
+    <title>Coffee&Code</title>
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,236 +23,521 @@
   </head>
 
   <body>
-    <!-- navbar start -->
-    <nav class="navbar">
-      <a href="#" class="navbar-logo">Coffee<span>Break.</span></a>
+    <!-- ============================================================ -->
+    <!-- PAGE WRAPPER -->
+    <!-- Fungsi: Flex layout agar footer selalu di bawah -->
+    <!-- ============================================================ -->
+    <div class="page-wrapper">
+      <!-- ===============NAVBAR=============== -->
+      <nav class="navbar" aria-label="main Navigation">
 
-      <div class="navbar-nav">
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#menu">Menu</a>
-        <a href="#contact">Contact</a>
-      </div>
+        <!--aria label untuk aksesibilitas-->
+        <a href="#home" class="navbar-logo" aria-label="coffee and code home">
+          <img
+            src="img/LGH.png"
+            alt="Coffee and Code Logo"
+            class="logo-img"
+          /><!-- Logo brand -->
+          <h1 class="brand-text"><span>Coffee</span> & Code</h1>
+          <!-- Heading utama brand -->
+        </a>
+        <!-- NAVIGATION LINKS -->
+        <!-- Menggunakan UL karena menu adalah list navigasi -->
+        <ul class="navbar-nav" role="menubar">
+          <li role="none"><a href="#home" role="menuitem">Home</a></li>
+          <li role="none"><a href="#about" role="menuitem">About Us</a></li>
+          <li role="none"><a href="#menu" role="menuitem">Menu</a></li>
+          <li role="none"><a href="#products" role="menuitem">Products</a></li>
+          <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+        </ul>
 
-      <div class="navbar-extra">
-        <a href="#" id="search-button"><i data-feather="search"></i></a>
-        <a href="#" id="shopping-cart"><i data-feather="shopping-cart"></i></a>
-        <a href="#" id="coffee-menu"><i data-feather="menu"></i></a>
-      </div>
+        <!-- NAVBAR ACTION BUTTONS -->
+        <!-- Button digunakan karena ini aksi JS, bukan navigasi -->
+        <div class="navbar-extra">
+          <button type="button" id="search-button" aria-label="Open-search">
+            <i data-feather="search"></i>
+          </button>
+          <button type="button" id="shopping-cart-button">
+            <i data-feather="shopping-cart" aria-label="Open cart"></i>
+            <span id="cart-item-count" class="item-count-badge">0</span>
+          </button>
+          <button type="button" id="coffee-menu" aria-label="Open menu">
+            <i data-feather="menu"></i>
+          </button>
+        </div>
 
-      <!-- Search Form Start -->
-      <div class="search-form">
-        <input type="search" id="search-box" placeholder="search here..." />
-        <label for="search-box"><i data-feather="search"></i></label>
-      </div>
-      <!-- Search Form End -->
+        <!-- SEARCH FORM -->
+        <div class="search-form" role="search">
+          <!-- Label tersembunyi untuk screen reader -->
+          <label for="search-box" class="sr-only">Search</label>
+          <input type="search" id="search-box" placeholder="search here..." />
+          <button type="submit" aria-label="submit search">
+            <i data-feather="search"></i>
+          </button>
+        </div>
+        <!-- Search Form End -->
 
-    </nav>
-    <!-- navbar end -->
+        <!-- SHOPPING CART PANEL -->
+        <div class="shopping-cart" aria-label="Shopping cart">
+          <!-- list item (di js innerhtml) -->
+          <div class="cart-items"></div>
+          <div class="cart-summary">
+            <h4 class="subtotal-display">Subtotal (0 item): IDR 0.000</h4>
+          </div>
+        </div>
+        <!-- Shopping Card End -->
+      </nav>
+      <!-- ============================================================== -->
 
-    <!-- hero section start-->
-    <section class="hero" id="home">
-      <main class="content">
-        <h1>Take Break With Cup Of <span>Coffee</span></h1>
-        <p>Enjoy The Best Coffee In Town For Create Another Inspiration!!</p>
-        <a href="#" class="cta">Order Now!</a>
+      <!-- ========================= MAIN ========================= -->
+      <main id="main-content">
+        <!-- =============== HERO SECTION =========-->
+        <section class="hero" id="home">
+          <!-- Hero Content -->
+          <div class="content">
+            <h1>Brew Your Ideas,</h1>
+            <h1>Code Your Future.</h1>
+            <p>Where coffee fuels focus and code turns ideas into reality.</p>
+            <!-- CTA navigasi -->
+            <a href="#menu" class="cta">Browse Menu!</a>
+          </div>
+        </section>
+        <!--==============================================================-->
+
+        <!-- ================== ABOUT SECTION =================== -->
+        <section id="about" class="about">
+          <div class="container">
+            <!-- header section -->
+            <header class="section-header">
+              <h2><span>About</span> Us</h2>
+            </header>
+
+            <!-- Main Content -->
+            <div class="about-grid">
+              <!-- Image -->
+              <figure class="about-img">
+                <img src="img/ren.png" alt="Coffee & Code workspaces" />
+              </figure>
+
+              <!-- Text Content -->
+              <div class="content">
+                <h3>More Than Coffee: The Hub for Innovation.</h3>
+
+                <p>
+                  Coffee&Code was born from the synergy between caffeine and
+                  creativity. We select high quality beans to sustain long
+                  coding sessions, ensuring every sip supports your
+                  concentration and innovative drive.
+                </p>
+
+                <p>
+                  Our space is designed to be the perfect meeting point whether
+                  you're pairing up for a quick sprint, brainstorming a new
+                  project, or just taking a necessary break from the screen. We
+                  believe great code starts with great connection.
+                </p>
+
+                <p>
+                  At Coffee&Code, sustainability and quality go hand in hand. We
+                  partner with local farmers to source ethically grown beans,
+                  ensuring that every sip supports communities and preserves the
+                  environment. It’s our way of making sure your coffee tastes
+                  good and does good.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================ -->
+
+        <!-- ================ MENU SECTION ================== -->
+
+        <section id="menu" class="menu">
+          <header class="section-header">
+            <h2>Our <span>Coffee</span> Menu</h2>
+            <p class="section-desc">
+              Explore blends crafted to enhance productivity and creativity.
+            </p>
+          </header>
+
+          <div class="row">
+            <!-- menu card -->
+            <!-- Setiap menu adalah ARTICLE karena konten mandiri -->
+            <article class="menu-card">
+              <img
+                src="img/menu/Espresso.png"
+                alt="Espresso"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Espresso -</h3>
+              <p>
+                A full-flavored, concentrated form of coffee that is served in
+                "shots."
+              </p>
+            </article>
+            <article class="menu-card">
+              <img
+                src="img/menu/Americano.png"
+                alt="Americano"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Americano -</h3>
+              <p>
+                Simple yet timeless espresso infused with hot water, delivering
+                a clean, crisp taste with a lighter body.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img
+                src="img/menu/Cappucino.png"
+                alt="Cappucino"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Cappucino -</h3>
+              <p>
+                Smooth yet inviting, espresso blended with steamed milk and
+                crowned with airy foam, delivering a balanced flavor wrapped in
+                warmth.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img src="img/menu/Latte.png" alt="Latte" class="menu-card-img" />
+              <h3 class="menu-card-title">- Latte -</h3>
+              <p>
+                Gentle and comforting, espresso blended with silky steamed milk
+                for a mellow, soothing flavor that warms the soul.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img
+                src="img/menu/Flat white.png"
+                alt="Flat White"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Flat White -</h3>
+              <p>
+                A warm embrace of bold espresso and velvety microfoam, crafted
+                for those who seek comfort in every sip.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img src="img/menu/Mocha.png" alt="Mocha" class="menu-card-img" />
+              <h3 class="menu-card-title">- Mocha -</h3>
+              <p>
+                Rich and indulgent, espresso blended with chocolate and silky
+                milk, offering a sweet harmony that delights every sip.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img
+                src="img/menu/Affogato.png"
+                alt="Coffee 7"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Affogato -</h3>
+              <p>
+                Classic espresso poured over vanilla ice cream, combining warmth
+                and sweetness in a delightful treat.
+              </p>
+            </article>
+            <article class="menu-card">
+              <img
+                src="img/menu/Machito.png"
+                alt="Affogato"
+                class="menu-card-img"
+              />
+              <h3 class="menu-card-title">- Machito -</h3>
+              <p>
+                A powerful shot of espresso 'stained' with a dollop of velvety
+                milk foam. Bold, sweet, and perfectly balanced, offering an
+                intense yet elegant coffee experience.
+              </p>
+            </article>
+          </div>
+        </section>
+        <!--============================================================= -->
+
+        <!-- ================ PRODUCTS SECTION ==================== -->
+        <section class="products" id="products">
+          <header class="section-header">
+            <h2>Our <span>Products</span></h2>
+            <p class="section-desc">
+              High-quality beans for developers who value focus and flavor.
+            </p>
+          </header>
+
+          <div class="row">
+            <!-- Quick Add To Cart Icon -->
+            <article class="product-card">
+              <div class="product-icons">
+                <a
+                  href="#"
+                  class="add-to-cart-btn"
+                  aria-label="Add Arabica to cart"
+                >
+                  <i data-feather="shopping-cart"></i>
+                </a>
+              </div>
+
+              <!-- Product Image (Modal Trigger) -->
+              <div class="product-image">
+                <a
+                  href="#"
+                  class="item-detail-button"
+                  data-name="Arabica"
+                  data-price="45000"
+                  data-desc="Arabica coffee brings you a gentle balance of fragrance and flavor. Cultivated in lush highlands, it offers a comforting, elegant experience in every cup, delivering timeless quality and refined indulgence"
+                  data-img="img/products/Arabica.png"
+                  aria-label="View Arabica product details"
+                >
+                  <img
+                    src="img/products/Arabica.png"
+                    alt="Arabica coffee beans product"
+                  />
+                </a>
+              </div>
+
+              <!-- Product Content (Title, Rating, Price) -->
+              <div class="product-content">
+                <!-- Product Name -->
+                <h3>Arabica</h3>
+
+                <!-- Product Rating -->
+                <div class="product-stars" aria-label="5 out of 5 stars">
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                </div>
+
+                <!-- Product Price -->
+                <div class="product-price">
+                  IDR 45.000 |<span class="old-price"> IDR 58.000</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-icons">
+                <a
+                  href="#"
+                  class="add-to-cart-btn"
+                  aria-label="Add Robusta to cart"
+                >
+                  <i data-feather="shopping-cart"></i>
+                </a>
+              </div>
+
+              <div class="product-image">
+                <a
+                  href="#"
+                  class="item-detail-button"
+                  data-name="Robusta"
+                  data-price="45000"
+                  data-desc="Robusta coffee delivers bold strength and deep character. With higher caffeine and earthy notes, it offers a powerful, invigorating taste that energizes every moment, perfect for those who crave intensity."
+                  data-img="img/products/Robusta.png"
+                  aria-label="View Robusta product details"
+                >
+                  <img
+                    src="img/products/Robusta.png"
+                    alt="Robusta coffee beans product"
+                  />
+                </a>
+              </div>
+
+              <div class="product-content">
+                <h3>Robusta</h3>
+
+                <div class="product-stars" aria-label="5 out of 5 stars">
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                </div>
+
+                <div class="product-price">
+                  IDR 45.000 <span class="old-price">IDR 58.000</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-icons">
+                <a
+                  href="#"
+                  class="add-to-cart-btn"
+                  aria-label="Add Liberica to cart"
+                >
+                  <i data-feather="shopping-cart"></i>
+                </a>
+              </div>
+
+              <div class="product-image">
+                <a
+                  href="#"
+                  class="item-detail-button"
+                  data-name="Liberica"
+                  data-price="35000"
+                  data-desc="Liberica coffee is rare and distinctive, with smoky, floral, and woody undertones. Grown in select tropical regions, it provides a unique, adventurous flavor journey that captivates true coffee explorers."
+                  data-img="img/products/Liberica.png"
+                  aria-label="View Liberica product details"
+                >
+                  <img
+                    src="img/products/Liberica.png"
+                    alt="Liberica coffee beans product"
+                  />
+                </a>
+              </div>
+
+              <div class="product-content">
+                <h3>Liberica</h3>
+
+                <div class="product-stars" aria-label="4 out of 5 stars">
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star" class="star-full"></i>
+                  <i data-feather="star"></i>
+                </div>
+
+                <div class="product-price">
+                  IDR 35.000 <span class="old-price">IDR 50.000</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!--end row-->
+        </section>
+
+        <!-- ============================================================ -->
+
+        <!-- ================= CONTACT SECTION ================ -->
+        <section id="contact" class="contact">
+          <header class="section-header">
+            <h2>Our <span>Contact</span></h2>
+            <p class="section-desc">
+              Let’s talk over coffee. Reach out to us anytime. : )
+            </p>
+          </header>
+
+          <div class="row">
+            <!-- Google Maps Embed -->
+            <iframe
+              title="coffee and code location"
+              aria-label="Google Maps showing Coffee and Code caffee shop location"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d496.5107208807344!2d122.86796603413346!3d-5.403904785759469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1762767518506!5m2!1sen!2sid"
+              loading="lazy"
+              allowfullscreen=""
+              referrerpolicy="no-referrer-when-downgrade"
+              class="map"
+            ></iframe>
+
+            <!-- Contact Form -->
+            <form action="#" method="post">
+              <div class="input-group">
+                <i data-feather="user"></i>
+                <input type="text" placeholder="Your Name" required />
+              </div>
+
+              <div class="input-group">
+                <i data-feather="mail"></i>
+                <input type="email" placeholder="Email" required />
+              </div>
+
+              <div class="input-group">
+                <i data-feather="phone"></i>
+                <input type="tel" placeholder="Phone Number" />
+              </div>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+        </section>
+        <!-- ============================================================ -->
       </main>
-    </section>
-    <!-- hero section end-->
-
-    <!-- About section start -->
-    <section id="about" class="about">
-      <h2><span>About</span> Us</h2>
-
-      <div class="row">
-        <div class="about-img">
-          <img src="img/bggr.jpg" alt="About Us" />
+      <!-- ============================================================== -->
+      <!-- ================== FOOTER =================== -->
+      <footer>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><i data-feather="facebook"></i></a>
+          <a
+            href="https://www.instagram.com/hsrno_"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><i data-feather="instagram"></i
+          ></a>
+          <a href="#"><i data-feather="twitter"></i></a>
+          <a
+            href="https://www.linkedin.com/in/hsrino/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            ><i data-feather="linkedin"></i>
+          </a>
         </div>
-        <div class="content">
-          <h3>Why you should choose us?</h3>
-          <p>
-            Coffee Break was born from our love for coffee. We select the finest
-            beans, craft them with care, and serve them to create an experience
-            that goes beyond just drinking coffee.
-          </p>
-
-          <p>
-            Our journey began with a simple idea: coffee should be more than
-            just a drink—it should be a moment of connection. Whether you’re
-            starting your day, meeting a friend, or taking a quiet pause, we
-            believe every cup has the power to bring people together.
-          </p>
-          <p>
-            At Coffee Break, sustainability and quality go hand in hand. We
-            partner with local farmers to source ethically grown beans, ensuring
-            that every sip supports communities and preserves the environment.
-            It’s our way of making sure your coffee tastes good and does good.
-          </p>
+        <!-- Footer Navigation -->
+        <div class="links">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#menu">Menu</a>
+          <a href="#contact">Contact</a>
         </div>
-      </div>
-    </section>
 
-    <!-- About section end -->
-
-    <!-- menu section start -->
-
-    <section id="menu" class="menu">
-      <h2>Our <span>Coffee</span> Menu</h2>
-
-      <p>
-        We believe coffee is more than a drink, it’s an experience. Explore our
-        signature creations and find the flavor that speaks to you.
-      </p>
-
-      <div class="row">
-        <div class="menu-card">
-          <img
-            src="img/menu/Espresso.png"
-            alt="Coffee 1"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- Espresso -</h3>
-          <p>
-            A full-flavored, concentrated form of coffee that is served in
-            "shots."
-          </p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/Americano.png"
-            alt="Coffee 1"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- Americano -</h3>
-          <p>
-            Simple yet timeless espresso infused with hot water, delivering a
-            clean, crisp taste with a lighter body.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/Cappucino.png"
-            alt="Coffee 1"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- Cappucino -</h3>
-          <p>
-            Smooth yet inviting, espresso blended with steamed milk and crowned
-            with airy foam, delivering a balanced flavor wrapped in warmth.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img src="img/menu/Latte.png" alt="Coffee 1" class="menu-card-img" />
-          <h3 class="menu-card-title">- Latte -</h3>
-          <p>
-            Gentle and comforting, espresso blended with silky steamed milk for
-            a mellow, soothing flavor that warms the soul.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img src="img/menu/Flat white.png" alt="Coffee 1" class="menu-card-img" />
-          <h3 class="menu-card-title">- Flat White -</h3>
-          <p>
-            A warm embrace of bold espresso and velvety microfoam, crafted for those who seek comfort in every sip.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img src="img/menu/Mocha.png" alt="Coffee 1" class="menu-card-img" />
-          <h3 class="menu-card-title">- Mocha -</h3>
-          <p>
-            Rich and indulgent, espresso blended with chocolate and silky milk,
-            offering a sweet harmony that delights every sip.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/Affogato.png"
-            alt="Coffee 1"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- Affogato -</h3>
-          <p>
-            Classic espresso poured over vanilla ice cream, combining warmth and
-            sweetness in a delightful treat.
-          </p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/Machito.png"
-            alt="Coffee 1"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- Machito -</h3>
-          <p>
-            A powerful shot of espresso 'stained' with a dollop of velvety milk foam. Bold, sweet, and perfectly balanced, offering an intense yet elegant coffee experience.
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- menu section end -->
-
-    <!-- contact section start -->
-
-    <section id="contact" class="contact">
-      <h2>Our <span>Contact</span></h2>
-      <p>
-        Have questions or want to place an order? Reach out to us through the
-        form below and let’s share stories over a cup of coffee.
-      </p>
-
-      <div class="row">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d496.5107208807344!2d122.86796603413346!3d-5.403904785759469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1762767518506!5m2!1sen!2sid"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          class="map"
-        ></iframe>
-
-        <form action="">
-          <div class="input-group">
-            <i data-feather="user"></i>
-            <input type="text" placeholder="Your Name" />
-          </div>
-          <div class="input-group">
-            <i data-feather="mail"></i>
-            <input type="text" placeholder="Email" />
-          </div>
-          <div class="input-group">
-            <i data-feather="phone"></i>
-            <input type="text" placeholder="Phone Number" />
-          </div>
-          <button type="submit" class="btn">Send Massaage</button>
-        </form>
-      </div>
-    </section>
-    <!-- contact section end -->
-
-    <!-- Footer Start -->
-    <footer>
-      <div class="socials">
-        <a href="#"><i data-feather="facebook"></i></a>
-        <a href="https://www.instagram.com/hsrno_?igsh=MTMzeGZwazV4Y3VsaA=="><i data-feather="instagram"></i></a>
-        <a href="#"><i data-feather="twitter"></i></a>
-        <a href="#"><i data-feather="linkedin"></i></a>
-      </div>
-      <div class="links">
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#menu">Menu</a>
-        <a href="#contact">Contact</a>
+        <!-- Footer Credit -->
         <div class="credit">
-          Created By <a href="">hsrno_</a> | &copy; 2025 All Rights Reserved.
+          Created By
+          <a
+            href="https://www.instagram.com/hsrno_"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            hsrno_
+          </a>
+          | &copy; 2025 All Rights Reserved.
+        </div>
+      </footer>
+      <!-- ============================================================== -->
+    </div>
+
+    <!-- ================= MODAL ================-->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img id="modal-img" src="" alt="product-image" />
+          <div class="product-content">
+            <h3 id="modal-name">Arabica</h3>
+            <p id="modal-desc">
+              Arabica coffee brings you a gentle balance of fragrance and
+              flavor. Cultivated in lush highlands, it offers a comforting,
+              elegant experience in every cup, delivering timeless quality and
+              refined indulgence.
+            </p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div id="modal-price" class="product-price">IDR45.000</div>
+            <a href="" class="cart-button" id="modal-add-to-cart-btn">
+              <i data-feather="shopping-cart"></i>
+              <span>Add to cart</span>
+            </a>
+          </div>
         </div>
       </div>
-    </footer>
-    <!-- Footer End -->
+    </div>
+    <!-- ===============================================================-->
 
     <!-- feather icon -->
     <script>
       feather.replace();
     </script>
-
+    <script src="https://unpkg.com/scrollreveal"></script>
     <!-- My js -->
     <script src="js/script.js"></script>
   </body>
