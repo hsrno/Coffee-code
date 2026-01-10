@@ -30,7 +30,6 @@
     <div class="page-wrapper">
       <!-- ===============NAVBAR=============== -->
       <nav class="navbar" aria-label="main Navigation">
-
         <!--aria label untuk aksesibilitas-->
         <a href="#home" class="navbar-logo" aria-label="coffee and code home">
           <img
@@ -38,17 +37,27 @@
             alt="Coffee and Code Logo"
             class="logo-img"
           /><!-- Logo brand -->
-          <h1 class="brand-text"><span>Coffee</span> & Code</h1>
+          <h1 class="brand-text"><span>Coffee</span>&Code</h1>
           <!-- Heading utama brand -->
         </a>
         <!-- NAVIGATION LINKS -->
         <!-- Menggunakan UL karena menu adalah list navigasi -->
         <ul class="navbar-nav" role="menubar">
-          <li role="none"><a href="#home" role="menuitem">Home</a></li>
-          <li role="none"><a href="#about" role="menuitem">About Us</a></li>
-          <li role="none"><a href="#menu" role="menuitem">Menu</a></li>
-          <li role="none"><a href="#products" role="menuitem">Products</a></li>
-          <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+          <li role="none">
+            <a href="#home" class="nav-text" role="menuitem">Home</a>
+          </li>
+          <li role="none">
+            <a href="#about" class="nav-text" role="menuitem">About Us</a>
+          </li>
+          <li role="none">
+            <a href="#menu" class="nav-text" role="menuitem">Menu</a>
+          </li>
+          <li role="none">
+            <a href="#products" class="nav-text" role="menuitem">Products</a>
+          </li>
+          <li role="none">
+            <a href="#contact" class="nav-text" role="menuitem">Contact</a>
+          </li>
         </ul>
 
         <!-- NAVBAR ACTION BUTTONS -->
@@ -79,14 +88,68 @@
 
         <!-- SHOPPING CART PANEL -->
         <div class="shopping-cart" aria-label="Shopping cart">
-          <!-- list item (di js innerhtml) -->
-          <div class="cart-items"></div>
+          <!-- Cart Header -->
+          <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" type="button" aria-label="Close cart">
+              <i data-feather="x"></i>
+            </button>
+          </div>
+          <!-- cart Item -->
+          <div class="cart-items">
+            <div class="empty-cart" id="empty-cart">
+              <i data-feather="shopping-bag"></i>
+              <p>Your cart is empty</p>
+              <span>Add some coffee ☕</span>
+            </div>
+          </div>
+          <!-- Cart Summary -->
           <div class="cart-summary">
             <h4 class="subtotal-display">Subtotal (0 item): IDR 0.000</h4>
           </div>
+
+          <!-- form untuk checkout -->
+          <div class="checkout-form-container">
+            <form id="checkoutForm">
+              <h4>Order details</h4>
+              <div class="input-group">
+                <i data-feather="user"></i>
+                <input
+                  type="text"
+                  name="name"
+                  id="name-forcheckout"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <i data-feather="mail"></i>
+                <input
+                  type="email"
+                  name="email"
+                  id="email-forcheckout"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <i data-feather="map-pin"></i>
+                <input
+                  type="text"
+                  name="address"
+                  id="address-forcheckout"
+                  placeholder="Address"
+                  required
+                />
+              </div>
+              <button type="submit" class="checkout-btn" id="checkout-btn">
+                <i data-feather="shopping-bag"></i>Proceed to Checkout
+              </button>
+            </form>
+          </div>
         </div>
-        <!-- Shopping Card End -->
       </nav>
+      <!-- Shopping Card End -->
       <!-- ============================================================== -->
 
       <!-- ========================= MAIN ========================= -->
@@ -270,16 +333,6 @@
           <div class="row">
             <!-- Quick Add To Cart Icon -->
             <article class="product-card">
-              <div class="product-icons">
-                <a
-                  href="#"
-                  class="add-to-cart-btn"
-                  aria-label="Add Arabica to cart"
-                >
-                  <i data-feather="shopping-cart"></i>
-                </a>
-              </div>
-
               <!-- Product Image (Modal Trigger) -->
               <div class="product-image">
                 <a
@@ -316,20 +369,20 @@
                 <div class="product-price">
                   IDR 45.000 |<span class="old-price"> IDR 58.000</span>
                 </div>
-              </div>
-            </article>
-
-            <article class="product-card">
-              <div class="product-icons">
-                <a
-                  href="#"
+                <button
+                  type="button"
                   class="add-to-cart-btn"
-                  aria-label="Add Robusta to cart"
+                  data-name="Arabica"
+                  data-price="45000"
+                  data-img="img/products/Arabica.png"
                 >
                   <i data-feather="shopping-cart"></i>
-                </a>
+                  <span class="add">Add to cart</span>
+                </button>
               </div>
-
+            </article>
+            <article class="product-card">
+              <!-- Product Image (Modal Trigger) -->
               <div class="product-image">
                 <a
                   href="#"
@@ -347,9 +400,12 @@
                 </a>
               </div>
 
+              <!-- Product Content (Title, Rating, Price) -->
               <div class="product-content">
+                <!-- Product Name -->
                 <h3>Robusta</h3>
 
+                <!-- Product Rating -->
                 <div class="product-stars" aria-label="5 out of 5 stars">
                   <i data-feather="star" class="star-full"></i>
                   <i data-feather="star" class="star-full"></i>
@@ -358,23 +414,26 @@
                   <i data-feather="star" class="star-full"></i>
                 </div>
 
+                <!-- Product Price -->
                 <div class="product-price">
-                  IDR 45.000 <span class="old-price">IDR 58.000</span>
+                  IDR 45.000 |<span class="old-price"> IDR 58.000</span>
                 </div>
+
+                <button
+                  type="button"
+                  class="add-to-cart-btn"
+                  data-name="Robusta"
+                  data-price="45000"
+                  data-img="img/products/Robusta.png"
+                >
+                  <i data-feather="shopping-cart"></i>
+                  <span>Add to cart</span>
+                </button>
               </div>
             </article>
 
             <article class="product-card">
-              <div class="product-icons">
-                <a
-                  href="#"
-                  class="add-to-cart-btn"
-                  aria-label="Add Liberica to cart"
-                >
-                  <i data-feather="shopping-cart"></i>
-                </a>
-              </div>
-
+              <!-- Product Image (Modal Trigger) -->
               <div class="product-image">
                 <a
                   href="#"
@@ -392,9 +451,12 @@
                 </a>
               </div>
 
+              <!-- Product Content (Title, Rating, Price) -->
               <div class="product-content">
+                <!-- Product Name -->
                 <h3>Liberica</h3>
 
+                <!-- Product Rating -->
                 <div class="product-stars" aria-label="4 out of 5 stars">
                   <i data-feather="star" class="star-full"></i>
                   <i data-feather="star" class="star-full"></i>
@@ -403,9 +465,21 @@
                   <i data-feather="star"></i>
                 </div>
 
+                <!-- Product Price -->
                 <div class="product-price">
-                  IDR 35.000 <span class="old-price">IDR 50.000</span>
+                  IDR 35.000 |<span class="old-price"> IDR 50.000</span>
                 </div>
+
+                <button
+                  type="button"
+                  class="add-to-cart-btn"
+                  data-name="Liberica"
+                  data-price="35000"
+                  data-img="img/products/Liberica.png"
+                >
+                  <i data-feather="shopping-cart"></i>
+                  <span>Add to cart</span>
+                </button>
               </div>
             </article>
           </div>
@@ -498,13 +572,27 @@
           | &copy; 2025 All Rights Reserved.
         </div>
       </footer>
-      <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================================================ -->
+
+    <!-- =================================== CONFIRATION POPUP ======================================== -->
+    <div class="confirm-popup" id="confirm-popup">
+      <div class="confirm-popup-content">
+        <h3>Remove Item?</h3>
+        <p>Are you sure you want to remove this item from cart?</p>
+        <div class="confirm-popup-buttons">
+          <button class="confirm-btn-yes" id="confirm-yes">Yes, Remove</button>
+          <button class="confirm-btn-no" id="confirm-no">Cancel</button>
+        </div>
+      </div>
     </div>
 
     <!-- ================= MODAL ================-->
     <div class="modal" id="item-detail-modal">
       <div class="modal-container">
-        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <button class="close-icon" type="button">
+          <i data-feather="x">close</i>
+        </button>
         <div class="modal-content">
           <img id="modal-img" src="" alt="product-image" />
           <div class="product-content">
@@ -523,10 +611,14 @@
               <i data-feather="star" class="star-full"></i>
             </div>
             <div id="modal-price" class="product-price">IDR45.000</div>
-            <a href="" class="cart-button" id="modal-add-to-cart-btn">
+            <button
+              class="cart-button"
+              id="modal-add-to-cart-btn"
+              type="button"
+            >
               <i data-feather="shopping-cart"></i>
               <span>Add to cart</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -537,8 +629,9 @@
     <script>
       feather.replace();
     </script>
-    <script src="https://unpkg.com/scrollreveal"></script>
     <!-- My js -->
     <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
   </body>
 </html>
