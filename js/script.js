@@ -17,7 +17,21 @@ const emptyCartMsg = document.querySelector("#empty-cart");
 // Cart items Cache -> untuk optimasi performa
 const cartItemsRefs = new Map();
 let cartItems = {};
-// PERUBAHAN: localStorage dihapus karena tidak didukung di claude.ai artifacts
+
+// Menggunakan persistent storage API untuk menyimpan cart
+function saveCartToStorage() {
+  localStorage.setItem("shopping-cart", JSON.stringify(cartItems));
+}
+
+function loadCartFromStorage() {
+  const data = localStorage.getItem("shopping-cart");
+  if (data) {
+    cartItems = JSON.parse(data);
+    return true;
+  }
+  return false;
+}
+
 
 // =================================================================
 // 2. UTILITY FUNCTIONS
@@ -57,7 +71,8 @@ if (coffeeMenu) {
 
 // Toggle Shopping Cart
 if (shoppingCartButton) {
-  shoppingCartButton.addEventListener("click", (e) => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  shoppingCartButton.addEventListener("click", (e) => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     e.preventDefault();
     e.stopPropagation(); // PERUBAHAN: Mencegah event bubbling
     closeAllOverlay("cart");
@@ -71,7 +86,8 @@ const searchForm = document.querySelector(".search-form");
 const searchBox = document.querySelector("#search-box");
 
 if (searchButton) {
-  searchButton.addEventListener("click", (e) => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  searchButton.addEventListener("click", (e) => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     e.preventDefault();
     e.stopPropagation(); // PERUBAHAN: Mencegah event bubbling
     closeAllOverlay("search");
@@ -81,6 +97,21 @@ if (searchButton) {
     }
   });
 }
+
+function showToast(message) {
+  const toast = document.querySelector("#toast");
+  const toastMsg = document.querySelector("#toast-message");
+
+  if (!toast || !toastMsg) return;
+
+  toastMsg.innerText = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
 
 // =================================================================
 // 4. LOGIKA MODAL DETAIL PRODUK (DINAMIS)
@@ -95,7 +126,8 @@ const modalAddToCartButton = document.querySelector(".modal .cart-button");
 
 // Logika Membuka Modal dan Mengisi Data Spesifik
 itemDetailButtons.forEach((btn) => {
-  btn.addEventListener("click", (e) => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  btn.addEventListener("click", (e) => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     e.preventDefault();
 
     const name = btn.getAttribute("data-name");
@@ -122,7 +154,8 @@ itemDetailButtons.forEach((btn) => {
 // Logika Menutup Modal
 const closeModalBtn = document.querySelector(".modal .close-icon");
 if (closeModalBtn) {
-  closeModalBtn.addEventListener("click", (e) => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  closeModalBtn.addEventListener("click", (e) => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     e.preventDefault();
     itemDetailModal.classList.remove("active");
     document.body.classList.remove("modal-open");
@@ -164,7 +197,8 @@ function hideConfirmPopup() {
 }
 
 if (confirmYesBtn) {
-  confirmYesBtn.addEventListener("click", () => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  confirmYesBtn.addEventListener("click", () => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     if (itemToDelete) {
       removeItemFromCart(itemToDelete);
     }
@@ -173,12 +207,14 @@ if (confirmYesBtn) {
 }
 
 if (confirmNoBtn) {
-  confirmNoBtn.addEventListener("click", () => { // PERUBAHAN: Dari onclick menjadi addEventListener
+  confirmNoBtn.addEventListener("click", () => {
+    // PERUBAHAN: Dari onclick menjadi addEventListener
     hideConfirmPopup();
   });
 }
 
-confirmPopup.addEventListener("click", (e) => { // PERUBAHAN: Dari onclick menjadi addEventListener
+confirmPopup.addEventListener("click", (e) => {
+  // PERUBAHAN: Dari onclick menjadi addEventListener
   if (e.target === confirmPopup) {
     hideConfirmPopup();
   }
@@ -209,16 +245,18 @@ function updateSubtotalAndBadge() {
     subtotal += item.price * item.quantity;
     totalItems += item.quantity;
   }
-  
+
   if (emptyCartMsg) {
     emptyCartMsg.style.display = totalItems > 0 ? "none" : "flex";
   }
 
   if (subtotalDisplay) {
     const itemText = totalItems === 1 ? "item" : "items";
-    subtotalDisplay.innerText = `Subtotal (${totalItems} ${itemText}): IDR ${formatRupiah(subtotal)}`;
+    subtotalDisplay.innerText = `Subtotal (${totalItems} ${itemText}): IDR ${formatRupiah(
+      subtotal
+    )}`;
   }
-  
+
   updateBadgeCount(totalItems);
   updateCheckoutButton(totalItems);
 
@@ -241,12 +279,15 @@ function addToCart(name, price, imgSrc) {
     };
     renderNewCartItem(name);
   }
-  
+
   updateSubtotalAndBadge();
+  saveCartToStorage();
+
 
   // PERUBAHAN: Menggunakan alert native sebagai fallback (SweetAlert2 dihapus karena mungkin tidak tersedia)
-  alert(`${name} added to cart`);
+  showToast(`${name} added to cart 🛒`);
   ShopCart.classList.add("active");
+  
 }
 
 function decreaseQuantity(name) {
@@ -256,6 +297,8 @@ function decreaseQuantity(name) {
     cartItems[name].quantity -= 1;
     updateSingleCartItem(name);
     updateSubtotalAndBadge();
+    saveCartToStorage();
+
   } else {
     showConfirmPopup(name);
   }
@@ -266,6 +309,8 @@ function increaseQuantity(name) {
   cartItems[name].quantity += 1;
   updateSingleCartItem(name);
   updateSubtotalAndBadge();
+  saveCartToStorage();
+
 }
 
 function updateSingleCartItem(name) {
@@ -283,12 +328,13 @@ function updateSingleCartItem(name) {
 
   if (nameEl) nameEl.innerText = name;
   if (quantityEl) quantityEl.innerText = item.quantity;
-  if (priceEl) priceEl.innerText = `IDR ${formatRupiah(item.price * item.quantity)}`;
+  if (priceEl)
+    priceEl.innerText = `IDR ${formatRupiah(item.price * item.quantity)}`;
 }
 
 function renderNewCartItem(name) {
   const item = cartItems[name];
-  
+
   cartItemsContainer.insertAdjacentHTML(
     "beforeend",
     `
@@ -296,7 +342,9 @@ function renderNewCartItem(name) {
         <img src="${item.imgSrc}" alt="${name}">
         <div class="detail-item">
             <h3>${name}</h3>
-            <div class="item-price">IDR ${formatRupiah(item.price * item.quantity)}</div>
+            <div class="item-price">IDR ${formatRupiah(
+              item.price * item.quantity
+            )}</div>
             <div class="cart-item-quantity">
               <button class="decrease-qty" data-name="${name}">
                 <i data-feather="minus-square"></i>
@@ -311,7 +359,7 @@ function renderNewCartItem(name) {
     </div>
     `
   );
-  
+
   requestAnimationFrame(() => {
     const newItem = document.querySelector(`.cart-item[data-name="${name}"]`);
     if (newItem) {
@@ -328,14 +376,16 @@ function removeItemFromCart(name) {
     console.warn(`Cart item for ${name} not found in cache.`);
     return;
   }
-  
+
   cartItemEl.classList.add("removing");
-  
+
   setTimeout(() => {
     delete cartItems[name];
     cartItemEl.remove();
     cartItemsRefs.delete(name);
     updateSubtotalAndBadge();
+    saveCartToStorage();
+
   }, 300);
 }
 
@@ -344,7 +394,7 @@ function removeItemFromCart(name) {
 // =================================================================
 cartItemsContainer.addEventListener("click", function (e) {
   e.stopPropagation();
-  
+
   const trashBtn = e.target.closest(".remove-item");
   if (trashBtn) {
     e.preventDefault();
@@ -390,7 +440,7 @@ function getProductData(element) {
 
 function handleAddToCartClick(e) {
   e.preventDefault();
-  e.stopPropagation(); // PERUBAHAN: Mencegah event bubbling
+  e.stopPropagation();
 
   const btn = e.target.closest("[data-name]");
   const productData = getProductData(btn);
@@ -413,12 +463,12 @@ if (modalAddToCartButton) {
 // =================================================================
 document.addEventListener("click", function (e) {
   // PERUBAHAN: Menambahkan check untuk tombol toggle agar tidak langsung tertutup
-  const isToggle = 
+  const isToggle =
     e.target.closest("#coffee-menu") ||
     e.target.closest("#search-button") ||
     e.target.closest("#shopping-cart-button");
-    
-  if (isToggle) return; // PERUBAHAN: Return early jika yang diklik adalah toggle button
+
+  if (isToggle) return;
 
   if (
     !navbar.contains(e.target) &&
@@ -449,7 +499,7 @@ const checkoutButton = document.querySelector("#checkout-btn");
 function updateCheckoutButton(itemCount) {
   if (!checkoutButton) return;
   if (itemCount > 0) {
-    checkoutButton.style.display = "block";
+    checkoutButton.style.display = "";
   } else {
     checkoutButton.style.display = "none";
   }
@@ -459,17 +509,18 @@ if (checkoutForm) {
   checkoutForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const itemCount = Object.keys(cartItems).length;
+    const itemCount = Object.values(cartItems).reduce((sum, item) => sum + item.quantity, 0);
+
     if (itemCount === 0) {
       alert("Your cart is empty! Please add items before checking out."); // PERUBAHAN: Menggunakan alert native
       return;
     }
-    
+
     const formData = new FormData(checkoutForm);
     const customerName = formData.get("name");
     const customerEmail = formData.get("email");
     const customerAddress = formData.get("address");
-    
+
     let message = "Hello, I would like to place an order:\n";
     message += "\nCustomer Details:\n";
     message += `Name: ${customerName}\n`;
@@ -480,7 +531,9 @@ if (checkoutForm) {
     let totalAmount = 0;
     for (const key in cartItems) {
       const item = cartItems[key];
-      message += `- ${key} (${item.quantity}x): IDR ${formatRupiah(item.price * item.quantity)}\n`;
+      message += `- ${key} (${item.quantity}x): IDR ${formatRupiah(
+        item.price * item.quantity
+      )}\n`;
       totalAmount += item.price * item.quantity;
     }
     message += `\nSubtotal: IDR ${formatRupiah(totalAmount)}\n`;
@@ -496,6 +549,8 @@ if (checkoutForm) {
       for (const key in cartItems) {
         delete cartItems[key];
       }
+      localStorage.removeItem("shopping-cart");
+
       cartItemsRefs.clear();
 
       if (cartItemsContainer) cartItemsContainer.innerHTML = "";
@@ -511,7 +566,7 @@ if (checkoutForm) {
 // 11. SCROLL REVEAL
 // =================================================================
 // PERUBAHAN: Menambahkan pengecekan apakah ScrollReveal tersedia sebelum digunakan
-if (typeof ScrollReveal !== 'undefined') {
+if (typeof ScrollReveal !== "undefined") {
   ScrollReveal({
     reset: false,
     distance: "60px",
@@ -519,12 +574,23 @@ if (typeof ScrollReveal !== 'undefined') {
     delay: 100,
   });
 
-  ScrollReveal().reveal(".hero .content h1, .hero .content p", { origin: "left" });
-  ScrollReveal().reveal(".hero .content .cta", { origin: "bottom", delay: 300 });
+  ScrollReveal().reveal(".hero .content h1, .hero .content p", {
+    origin: "left",
+  });
+  ScrollReveal().reveal(".hero .content .cta", {
+    origin: "bottom",
+    delay: 300,
+  });
   ScrollReveal().reveal(".about .row .about-img", { origin: "left" });
-  ScrollReveal().reveal(".about .row .content", { origin: "right", delay: 200 });
+  ScrollReveal().reveal(".about .row .content", {
+    origin: "right",
+    delay: 200,
+  });
   ScrollReveal().reveal(".menu-card", { origin: "top", interval: 100 });
-  ScrollReveal().reveal(".products .product-card", { origin: "bottom", interval: 150 });
+  ScrollReveal().reveal(".products .product-card", {
+    origin: "bottom",
+    interval: 150,
+  });
   ScrollReveal().reveal(".contact .row .map", { origin: "left" });
   ScrollReveal().reveal(".contact .row form", { origin: "right", delay: 200 });
 }
@@ -532,14 +598,18 @@ if (typeof ScrollReveal !== 'undefined') {
 // =================================================================
 // DOM Content Loaded
 // =================================================================
-document.addEventListener("DOMContentLoaded", () => {
-  for (const name in cartItems) {
-    renderNewCartItem(name);
+document.addEventListener("DOMContentLoaded", async () => {
+  const cartLoaded = await loadCartFromStorage();  // ← LOAD DULU dari storage
+  
+  if (cartLoaded) {  // ← Cek apakah ada data
+    for (const name in cartItems) {
+      renderNewCartItem(name);
+    }
   }
+  
   updateSubtotalAndBadge();
   
-  // PERUBAHAN: Menambahkan pengecekan apakah feather tersedia sebelum replace
-  if (typeof feather !== 'undefined') {
+  if (typeof feather !== "undefined") {
     feather.replace();
   }
 });

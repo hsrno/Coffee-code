@@ -5,26 +5,6 @@
   --cf: #ecdec4;
   --nav-height: 90px;
   --shadow-glow: 0 8px 25px rgba(182, 137, 91, 0.3);
-
-  /* spacing system */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 3rem;
-  --spacing-xl: 5rem;
-
-  /* For Size */
-  --font-xs: 0.85rem;
-  --font-sm: 1.2rem;
-  --font-md: 1.5rem;
-  --font-lg: 1.8rem;
-  --font-xl: 2.5rem;
-  --fon-2xl: 3rem;
-
-  /* Timimg */
-  --transition-fast: 0.2s;
-  --transition-medium: 0.3s;
-  --transition-slow: 0.5s;
 }
 
 * {
@@ -64,6 +44,32 @@ main {
 section {
   scroll-margin-top: var(--nav-height);
 }
+
+.toast {
+  position: fixed;
+  top: 1.5rem;
+  left: 75%;
+  transform: translateX(-50%) translateY(-20px);
+
+  background: var(--primary);
+  color: var(--bg);
+  padding: 1rem 1.6rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
 /* ==================== NAVBAR ========================= */
 .navbar {
   position: fixed; /* Navigasi tetap di atas */
@@ -92,7 +98,6 @@ section {
 .navbar .navbar-logo {
   display: flex;
   align-items: center;
-  font-style: italic;
   font-weight: 700;
 }
 
@@ -353,13 +358,12 @@ section {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
- padding: 1rem 1.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
-* Custom Scrollbar untuk Cart Items */
-.cart-items::-webkit-scrollbar {
+* Custom Scrollbar untuk Cart Items */ .cart-items::-webkit-scrollbar {
   width: 6px;
 }
 
@@ -486,7 +490,6 @@ section {
   transform: translateX(20px);
   transition: 0.3s ease;
   pointer-events: none;
-   
 }
 
 .cart-item .remove-item {
@@ -529,7 +532,7 @@ section {
 .cart-summary {
   flex-shrink: 0;
   padding: 1.5rem;
-  border-top: 2px solid rgba(236, 214, 175, 0.3);;
+  border-top: 2px solid rgba(236, 214, 175, 0.3);
   background-color: #0b0b0b;
 }
 
@@ -537,7 +540,6 @@ section {
   font-size: 1.3rem;
   font-weight: 600;
   text-align: center;
-  text-align: right;
   letter-spacing: 0.5px;
   color: var(--primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -552,11 +554,6 @@ section {
   overflow-y: auto;
 }
 
-.checkout-form-container h4 {
-  color: var(--primary);
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
-}
 /* Custom Scrollbar untuk Checkout Form */
 .checkout-form-container::-webkit-scrollbar {
   width: 4px;
@@ -587,7 +584,7 @@ section {
 
 .checkout-form-container .input-group i {
   color: var(--primary);
-  flex-shrink: 0; /* PERUBAHAN: Keep icon size consistent */
+  flex-shrink: 0;
   margin-right: 0.5rem;
 }
 
@@ -606,6 +603,10 @@ section {
 
 .checkout-btn {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
   padding: 1.2rem;
   background-color: #25d366;
   color: #fff;
@@ -613,13 +614,20 @@ section {
   font-size: 1.1rem;
   border-radius: 0.8rem;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  transition: 0.3s;
-  margin-top: 1rem;
   border: none;
+}
+
+.checkout-btn i {
+  display: inline-flex !important;
+  align-items: center;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.checkout-btn span {
+display: inline-block;
+font-size: 1.4rem;
+line-height: 1;
 }
 
 .checkout-btn:hover {
@@ -660,9 +668,13 @@ section {
   content: "";
   inset: 0;
   position: absolute;
-  opacity: 0.05;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .hero .content {
@@ -1507,11 +1519,11 @@ footer .credit a {
     width: 100%; /* PERUBAHAN: Full width di mobile */
     max-width: 400px;
   }
-  
+
   .cart-items {
     padding: 1rem;
   }
-  
+
   .checkout-form-container {
     max-height: 250px;
   }
@@ -1532,7 +1544,7 @@ footer .credit a {
     transform: none; /* mobile = no hover */
   }
 
-   .contact .row {
+  .contact .row {
     flex-wrap: wrap;
   }
   .contact .row .map {
@@ -1542,5 +1554,4 @@ footer .credit a {
   .contact .row form {
     padding-top: 3rem 5%;
   }
-
 }
