@@ -32,7 +32,6 @@ function loadCartFromStorage() {
   return false;
 }
 
-
 // =================================================================
 // 2. UTILITY FUNCTIONS
 // =================================================================
@@ -111,7 +110,6 @@ function showToast(message) {
     toast.classList.remove("show");
   }, 2500);
 }
-
 
 // =================================================================
 // 4. LOGIKA MODAL DETAIL PRODUK (DINAMIS)
@@ -283,11 +281,9 @@ function addToCart(name, price, imgSrc) {
   updateSubtotalAndBadge();
   saveCartToStorage();
 
-
   // PERUBAHAN: Menggunakan alert native sebagai fallback (SweetAlert2 dihapus karena mungkin tidak tersedia)
   showToast(`${name} added to cart 🛒`);
   ShopCart.classList.add("active");
-  
 }
 
 function decreaseQuantity(name) {
@@ -298,7 +294,6 @@ function decreaseQuantity(name) {
     updateSingleCartItem(name);
     updateSubtotalAndBadge();
     saveCartToStorage();
-
   } else {
     showConfirmPopup(name);
   }
@@ -310,7 +305,6 @@ function increaseQuantity(name) {
   updateSingleCartItem(name);
   updateSubtotalAndBadge();
   saveCartToStorage();
-
 }
 
 function updateSingleCartItem(name) {
@@ -385,7 +379,6 @@ function removeItemFromCart(name) {
     cartItemsRefs.delete(name);
     updateSubtotalAndBadge();
     saveCartToStorage();
-
   }, 300);
 }
 
@@ -509,7 +502,10 @@ if (checkoutForm) {
   checkoutForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const itemCount = Object.values(cartItems).reduce((sum, item) => sum + item.quantity, 0);
+    const itemCount = Object.values(cartItems).reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
 
     if (itemCount === 0) {
       alert("Your cart is empty! Please add items before checking out."); // PERUBAHAN: Menggunakan alert native
@@ -599,16 +595,17 @@ if (typeof ScrollReveal !== "undefined") {
 // DOM Content Loaded
 // =================================================================
 document.addEventListener("DOMContentLoaded", async () => {
-  const cartLoaded = await loadCartFromStorage();  // ← LOAD DULU dari storage
-  
-  if (cartLoaded) {  // ← Cek apakah ada data
+  const cartLoaded = await loadCartFromStorage(); // ← LOAD DULU dari storage
+
+  if (cartLoaded) {
+    // ← Cek apakah ada data
     for (const name in cartItems) {
       renderNewCartItem(name);
     }
   }
-  
+
   updateSubtotalAndBadge();
-  
+
   if (typeof feather !== "undefined") {
     feather.replace();
   }

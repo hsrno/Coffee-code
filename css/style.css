@@ -11,7 +11,7 @@
   /* Reset default browser styling */
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Model kotak yang lebih mudah diprediksi */
+  box-sizing: border-box;
   outline: none;
   border: none;
   text-decoration: none;
@@ -56,7 +56,7 @@ section {
   padding: 1rem 1.6rem;
   border-radius: 0.8rem;
   font-weight: 600;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
 
   opacity: 0;
   pointer-events: none;
@@ -69,10 +69,9 @@ section {
   transform: translateX(-50%) translateY(0);
 }
 
-
 /* ==================== NAVBAR ========================= */
 .navbar {
-  position: fixed; /* Navigasi tetap di atas */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -82,9 +81,9 @@ section {
   align-items: center;
   height: var(--nav-height);
   padding: 0 7%;
-  background-color: rgb(1, 1, 1, 0.85); /* Latar belakang semi-transparan */
-  border-bottom: 0.1px solid #9f916d; /* Efek kaca modern */
-  z-index: 9999; /* Pastikan selalu di lapisan teratas */
+  background-color: rgb(1, 1, 1, 0.85);
+  border-bottom: 0.1px solid #9f916d;
+  z-index: 9999;
 }
 
 .navbar .navbar-nav {
@@ -161,7 +160,7 @@ section {
   transition: 0.3s ease;
 }
 #coffee-menu {
-  display: none; /* Sembunyikan tombol hamburger secara default */
+  display: none;
 }
 
 .navbar .navbar-extra button:hover,
@@ -181,7 +180,6 @@ section {
 }
 .navbar .navbar-nav .nav-text:active {
   color: var(--primary);
-  /* PENAMBAHAN: Efek zoom lebih besar saat ditekan/disentuh */
   transform: scale(1.2);
 }
 
@@ -190,7 +188,6 @@ section {
   position: absolute;
   top: -10px;
   right: -10px;
-  /* perilaku */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -204,11 +201,7 @@ section {
   font-size: 1rem;
   font-weight: bold;
   border-radius: 50%;
-  /* ukutan dan tata letak */
   padding: 0.4rem 0.3rem;
-
-  /* perilaku */
-
   z-index: 2;
 }
 
@@ -216,7 +209,7 @@ section {
 .navbar .search-form {
   position: absolute;
   width: 90%;
-  top: 100%; /* Tepat di bawah navbar */
+  top: 100%;
   right: 7%;
   background-color: #fff;
   width: 50rem;
@@ -224,7 +217,7 @@ section {
   border-radius: 0.2rem;
   display: flex;
   align-items: center;
-  transform: scaleY(0); /* Awalnyadisembunyikan */
+  transform: scaleY(0);
   transform-origin: top;
   transition: 0.3s;
   z-index: 1100;
@@ -243,7 +236,7 @@ section {
 }
 
 .navbar .search-form.active {
-  transform: scaleY(1); /* Tampilkan saat class 'active' ada */
+  transform: scaleY(1);
   padding: 0 1rem;
   font-size: 1.6rem;
   pointer-events: auto;
@@ -283,7 +276,7 @@ section {
 .shopping-cart {
   position: fixed;
   top: 0;
-  right: -100%; /* Sembunyikan di luar layar */
+  right: -100%;
   width: 360px;
   height: 100vh;
   background-color: #111;
@@ -299,7 +292,7 @@ section {
 }
 
 .shopping-cart.active {
-  right: 0; /* Tampilkan di sisi kanan saat class 'active' ada */
+  right: 0;
   transition: 0.3s ease;
   pointer-events: auto;
 }
@@ -429,12 +422,7 @@ section {
 }
 
 .cart-item:hover {
-  background-color: rgba(
-    236,
-    214,
-    175,
-    0.05
-  ); /* Pakai warna primary tapi sangat transparan */
+  background-color: rgba(236, 214, 175, 0.05);
   cursor: pointer;
   transition: 0.3s;
 }
@@ -625,9 +613,9 @@ section {
 }
 
 .checkout-btn span {
-display: inline-block;
-font-size: 1.4rem;
-line-height: 1;
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .checkout-btn:hover {
@@ -647,7 +635,7 @@ line-height: 1;
   background-image: url(../img/BGHOME.png);
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed; /*Kunci efek parallax */
+  background-attachment: fixed;
   background-position: center;
   overflow: hidden;
   z-index: 1;
@@ -663,7 +651,6 @@ line-height: 1;
   pointer-events: none;
 }
 
-/* Gradient di bawah hero (memberikan transisi ke bagian hitam berikutnya) */
 .hero::after {
   content: "";
   inset: 0;
@@ -830,7 +817,7 @@ line-height: 1;
 .menu .row .menu-card {
   text-align: center;
   padding-bottom: 4rem;
-  transition: 0.3s ease; /* Transisi untuk efek hover */
+  transition: 0.3s ease;
 }
 
 .menu .menu-card img {
@@ -839,8 +826,8 @@ line-height: 1;
 }
 /* EFEK TIMBUL pada Menu Card (PENAMBAHAN) */
 .menu .menu-card img:hover {
-  transform: scale(1.05) translateY(-8px); /* Mengangkat dan Memperbesar */
-  box-shadow: 0 15px 25px rgba(182, 137, 91, 0.5); /* Bayangan yang serasi dengan warna primary */
+  transform: scale(1.05) translateY(-8px);
+  box-shadow: 0 15px 25px rgba(182, 137, 91, 0.5);
 }
 
 .menu .row .menu-card .menu-card-title {
@@ -864,7 +851,7 @@ line-height: 1;
   text-align: center;
   border: 1px solid #666;
   padding: 2rem;
-  transition: 0.3s ease; /* Transisi untuk efek hover */
+  transition: 0.3s ease;
 }
 
 .products .product-icons-bottom {
@@ -903,9 +890,9 @@ line-height: 1;
 
 /* EFEK TIMBUL pada Product Card (PENAMBAHAN) */
 .products .product-image img:hover {
-  transform: scale(1.05) translateY(-5px); /* Mengangkat dan Memperbesar sedikit */
-  box-shadow: 0 8px 15px rgba(182, 137, 91, 0.5); /* Bayangan yang serasi dengan warna primary */
-  border: 1px solid var(--primary); /* Mengubah warna border saat hover */
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 8px 15px rgba(182, 137, 91, 0.5);
+  border: 1px solid var(--primary);
 }
 
 .products .product-content h3 {
@@ -1183,7 +1170,7 @@ footer .credit a {
   position: fixed;
   left: 0;
   overflow: auto;
-  background: rgba(0, 0, 0, 0.7); /* Latar belakang gelap */
+  background: rgba(0, 0, 0, 0.7);
   visibility: hidden;
   transition: opacity 0.3s ease;
   z-index: 1200;
@@ -1366,8 +1353,8 @@ footer .credit a {
     padding-top: var(--nav-height);
   }
   #coffee-menu {
-    display: flex !important; /* Tampilkan tombol hamburger */
-    order: 3; /* Pindahkan ke posisi terakhir */
+    display: flex !important;
+    order: 3;
     z-index: 1001;
   }
 
@@ -1383,7 +1370,7 @@ footer .credit a {
     flex-direction: column;
     padding: 2rem;
     gap: 1.5rem;
-    transform: translateX(100%); /* Sembunyikan ke kanan */
+    transform: translateX(100%);
     opacity: 0;
     visibility: hidden;
     pointer-events: auto;
@@ -1392,7 +1379,7 @@ footer .credit a {
   }
 
   .navbar .navbar-nav.active {
-    transform: translateX(0); /* Tampilkan saat aktif */
+    transform: translateX(0);
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
@@ -1516,7 +1503,7 @@ footer .credit a {
   }
 
   .shopping-cart {
-    width: 100%; /* PERUBAHAN: Full width di mobile */
+    width: 100%;
     max-width: 400px;
   }
 
@@ -1541,7 +1528,7 @@ footer .credit a {
   }
 
   .hero .content .cta:hover {
-    transform: none; /* mobile = no hover */
+    transform: none;
   }
 
   .contact .row {
