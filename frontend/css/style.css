@@ -101,12 +101,12 @@ section {
 }
 
 .navbar .navbar-logo .logo-img {
-  height: 3.5rem;
+  height: 3rem;
   padding: 0.5rem;
   width: auto;
 }
 .navbar .navbar-logo .brand-text {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 0.3rem;
   letter-spacing: 0.1rem;
   font-weight: 500;
@@ -116,7 +116,7 @@ section {
 
 .navbar .navbar-nav .nav-text {
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: inline-block;
   margin: 0 1rem;
   transition: 0.3s ease-in-out;
@@ -418,7 +418,9 @@ section {
   /* CART ITEM ANIMATION */
   opacity: 0;
   transform: translateX(0);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .cart-item:hover {
@@ -432,7 +434,9 @@ section {
   font-size: 1rem;
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .cart-item.show .item-price {
@@ -483,7 +487,9 @@ section {
 .cart-item .remove-item {
   cursor: pointer;
   color: #aaa;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
   flex-shrink: 0;
   align-self: flex-start;
   margin-top: 1.6rem;
@@ -645,7 +651,9 @@ section {
   content: "";
   position: absolute;
   inset: 0;
-  background: circle at center rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.45) 45%,
+  background:
+    circle at center rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
     rgba(0, 0, 0, 0.75) 100%;
   z-index: 0;
   pointer-events: none;
@@ -679,7 +687,8 @@ section {
   font-size: clamp(3.2rem, 5vw, 4.5rem);
   letter-spacing: 0.03em;
   color: var(--primary);
-  text-shadow: 0 0 6px rgba(182, 137, 91, 0.35),
+  text-shadow:
+    0 0 6px rgba(182, 137, 91, 0.35),
     0 0 18px rgba(182, 137, 91, 0.15);
   line-height: 1.2;
 }
@@ -702,7 +711,9 @@ section {
   border-radius: 1rem;
   border: 1px solid transparent;
   box-shadow: 1px 1px 3px rgb(1, 1, 3, 0.5);
-  transition: transform 0.3s ease, box-shadow 0.3s ease,
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
     background-color 0.3s ease;
 }
 
@@ -1001,7 +1012,9 @@ section {
   border-radius: 1rem;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 .contact .row form .btn:hover {
   background-color: transparent;
@@ -1040,7 +1053,10 @@ footer .socials a {
   margin: 0 0.6rem;
   padding: 0.5rem;
   border-radius: 1rem;
-  transition: transform 0.25s ease, color 0.25s ease, filter 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    filter 0.25s ease;
 }
 
 footer .socials a:hover {
@@ -1256,7 +1272,9 @@ footer .credit a {
   object-fit: cover;
   border-radius: 1.5rem;
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 .modal-content img:hover {

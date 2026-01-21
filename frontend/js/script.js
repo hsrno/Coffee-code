@@ -1,4 +1,87 @@
 "use strict";
+
+// =================================================================
+// 0. LOAD PRODUCTS FROM BACKEND API
+// =================================================================
+const productsContainer = document.querySelector("#products-container");
+
+async function loadProductsFromAPI() {
+  try {
+    const res = await fetch("http://localhost:3000/api/products");
+    const products = await res.json();
+
+    productsContainer.innerHTML = "";
+
+    products.forEach((p) => {
+      const productHTML = `
+        <article class="product-card">
+          <div class="product-image">
+            <a href="#" class="item-detail-button"
+              data-name="${p.name}"
+              data-price="${p.price}"
+              data-desc="${p.description}"
+              data-img="img/products/${p.image}">
+              <img src="img/products/${p.image}" alt="${p.name}">
+            </a>
+          </div>
+
+          <div class="product-content">
+            <h3>${p.name}</h3>
+            <div class="product-price">IDR ${formatRupiah(p.price)}</div>
+
+            <button class="add-to-cart-btn"
+              data-name="${p.name}"
+              data-price="${p.price}"
+              data-img="img/products/${p.image}">
+              <i data-feather="shopping-cart"></i>
+              <span>Add to cart</span>
+            </button>
+          </div>
+        </article>
+      `;
+      productsContainer.insertAdjacentHTML("beforeend", productHTML);
+    });
+
+    if (typeof feather !== "undefined") feather.replace();
+
+    bindDynamicButtons();
+  } catch (err) {
+    console.error("FAILED LOAD PRODUCTS:", err);
+  }
+}
+
+function bindDynamicButtons() {
+  const itemDetailButtons = document.querySelectorAll(".item-detail-button");
+  itemDetailButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const name = btn.getAttribute("data-name");
+      const price = parseInt(btn.getAttribute("data-price"));
+      const desc = btn.getAttribute("data-desc");
+      const imgSrc = btn.getAttribute("data-img");
+
+      modalName.innerText = name;
+      modalPrice.innerText = "IDR " + formatRupiah(price);
+      modalDesc.innerText = desc;
+      modalImg.src = imgSrc;
+      modalImg.alt = name;
+
+      modalAddToCartButton.setAttribute("data-name", name);
+      modalAddToCartButton.setAttribute("data-price", price);
+      modalAddToCartButton.setAttribute("data-img", imgSrc);
+
+      itemDetailModal.classList.add("active");
+      document.body.classList.add("model-open");
+    });
+  });
+
+  const productAddToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+  productAddToCartButtons.forEach((button) => {
+    button.addEventListener("click", handleAddToCartClick);
+  });
+}
+
 // =================================================================
 // 1. ELEMEN DOM (Document Object Model) - PENGAMBILAN VARIABEL
 // =================================================================
@@ -251,7 +334,7 @@ function updateSubtotalAndBadge() {
   if (subtotalDisplay) {
     const itemText = totalItems === 1 ? "item" : "items";
     subtotalDisplay.innerText = `Subtotal (${totalItems} ${itemText}): IDR ${formatRupiah(
-      subtotal
+      subtotal,
     )}`;
   }
 
@@ -337,7 +420,7 @@ function renderNewCartItem(name) {
         <div class="detail-item">
             <h3>${name}</h3>
             <div class="item-price">IDR ${formatRupiah(
-              item.price * item.quantity
+              item.price * item.quantity,
             )}</div>
             <div class="cart-item-quantity">
               <button class="decrease-qty" data-name="${name}">
@@ -351,7 +434,7 @@ function renderNewCartItem(name) {
         </div>
         <i data-feather="trash-2" class="remove-item"></i>
     </div>
-    `
+    `,
   );
 
   requestAnimationFrame(() => {
@@ -504,7 +587,7 @@ if (checkoutForm) {
 
     const itemCount = Object.values(cartItems).reduce(
       (sum, item) => sum + item.quantity,
-      0
+      0,
     );
 
     if (itemCount === 0) {
@@ -528,7 +611,7 @@ if (checkoutForm) {
     for (const key in cartItems) {
       const item = cartItems[key];
       message += `- ${key} (${item.quantity}x): IDR ${formatRupiah(
-        item.price * item.quantity
+        item.price * item.quantity,
       )}\n`;
       totalAmount += item.price * item.quantity;
     }
@@ -538,7 +621,7 @@ if (checkoutForm) {
     const waNumber = "6282198044200";
     window.open(
       `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`,
-      "_blank"
+      "_blank",
     );
 
     setTimeout(() => {
@@ -595,6 +678,8 @@ if (typeof ScrollReveal !== "undefined") {
 // DOM Content Loaded
 // =================================================================
 document.addEventListener("DOMContentLoaded", async () => {
+  await loadProductsFromAPI();
+
   const cartLoaded = await loadCartFromStorage(); // ← LOAD DULU dari storage
 
   if (cartLoaded) {
